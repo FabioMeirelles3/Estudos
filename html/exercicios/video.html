@@ -8,7 +8,7 @@
 </div>
 
 <div>
-    <input type="button" wm-play="meuVideo" onclick="playVideo()" value="Play" id="botaoPlay">
+    <input type="button" onclick="playVideo()" value="Play" id="botaoPlay">
 </div>
 
 <style>
@@ -31,17 +31,30 @@
 
 <script>
 
-function playVideo(){
-    const meuVideo2 = document.getElementById('meuVideo')
+    function playVideo(){
+        const meuVideo = document.getElementById('meuVideo')
 
-    if(meuVideo2.paused) {
-        meuVideo2.play()
-        document.getElementById('botaoPlay').value = "Pause"
-    } else {
-        meuVideo2.pause()
-        document.getElementById('botaoPlay').value = "Play"
-    }
-    
+        if(meuVideo.paused) {
+            meuVideo.play()
+            document.getElementById('botaoPlay').value = "Pause"
+        } else {
+            meuVideo.pause()
+            document.getElementById('botaoPlay').value = "Play"
+        }
+        
+    function configurarVideo(id){
+        const video = document.getElementById(id)
+        video.oncontextmenu = () => false
+
+        setInterval(() => {            
+            const percentual = (video.currentTime / video.duration) * 100
+            const valorDiv = document.querySelector(`[wm-progresso=${id}] > div`)
+            valorDiv.style.width = `${percentual}%`
+            valorDiv.innerHTML = `${percentual.toFixed(1)}%`
+        },500)
+
+    }  
+    configurarVideo('meuVideo')
 }
 
 </script>
